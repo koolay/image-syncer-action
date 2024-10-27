@@ -35,7 +35,7 @@ inputs:
   image_syncer_version:
     description: 'Version of image-syncer to use'
     required: false
-    default: 'v1.3.1'
+    default: 'v1.5.5'
 
 runs:
   using: "composite"
