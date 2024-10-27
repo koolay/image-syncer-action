@@ -1,0 +1,55 @@
+---
+name: 'Image Sync Action'
+description: 'Sync container images between different registries using image-syncer'
+inputs:
+  source_registry:
+    description: 'Source registry address'
+    required: true
+  source_username:
+    description: 'Source registry username'
+    required: false
+  source_password:
+    description: 'Source registry password'
+    required: false
+  dest_registry:
+    description: 'Destination registry address'
+    required: true
+  dest_username:
+    description: 'Destination registry username'
+    required: true
+  dest_password:
+    description: 'Destination registry password'
+    required: true
+  image_list_file:
+    description: 'Path to the image list file (YAML format)'
+    required: true
+    default: 'image-list.yaml'
+  concurrent:
+    description: 'Number of concurrent sync processes'
+    required: false
+    default: '6'
+  retries:
+    description: 'Number of retries for failed sync'
+    required: false
+    default: '3'
+  image_syncer_version:
+    description: 'Version of image-syncer to use'
+    required: false
+    default: 'v1.3.1'
+
+runs:
+  using: "composite"
+  steps:
+    - shell: bash
+      run: ${{ github.action_path }}/sync.sh
+      env:
+        INPUT_SOURCE_REGISTRY: ${{ inputs.source_registry }}
+        INPUT_SOURCE_USERNAME: ${{ inputs.source_username }}
+        INPUT_SOURCE_PASSWORD: ${{ inputs.source_password }}
+        INPUT_DEST_REGISTRY: ${{ inputs.dest_registry }}
+        INPUT_DEST_USERNAME: ${{ inputs.dest_username }}
+        INPUT_DEST_PASSWORD: ${{ inputs.dest_password }}
+        INPUT_IMAGE_LIST_FILE: ${{ inputs.image_list_file }}
+        INPUT_CONCURRENT: ${{ inputs.concurrent }}
+        INPUT_RETRIES: ${{ inputs.retries }}
+        INPUT_IMAGE_SYNCER_VERSION: ${{ inputs.image_syncer_version }}
