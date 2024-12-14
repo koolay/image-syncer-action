@@ -55,5 +55,5 @@ runs:
         INPUT_IMAGE_LIST_FILE: ${{ inputs.image_list_file }}
         INPUT_CONCURRENT: ${{ inputs.concurrent }}
         INPUT_RETRIES: ${{ inputs.retries }}
-        IMAGE_ARCH: ${{input.image_arch}}
+        IMAGE_ARCH: ${{ input.image_arch }}
         INPUT_IMAGE_SYNCER_VERSION: ${{ inputs.image_syncer_version }}
