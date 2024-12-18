@@ -29,7 +29,7 @@ fi
 
 # 执行同步
 echo "Starting image sync with concurrent=${INPUT_CONCURRENT} and retries=${INPUT_RETRIES}..."
-image-syncer --proc=${INPUT_CONCURRENT} --auth=auth.yaml --images=${INPUT_IMAGE_LIST_FILE} --retries=${INPUT_RETRIES} --arch=${IMAGE_ARCH}
+image-syncer --proc=${INPUT_CONCURRENT} --auth=auth.yaml --images=${INPUT_IMAGE_LIST_FILE} --retries=${INPUT_RETRIES} --os=linux --arch=${IMAGE_ARCH}
 
 echo "Image sync completed successfully!"
 
