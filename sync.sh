@@ -27,9 +27,20 @@ if [ ! -f "${INPUT_IMAGE_LIST_FILE}" ]; then
     exit 1
 fi
 
+
+
+# IMAGE_ARCH 是一个逗号分隔的字符串，例如 "arm64,amd64" 或其它任意组合
+ARCH_FLAGS=()
+# 将 IMAGE_ARCH 用逗号分隔并遍历每个架构
+IFS=',' read -r -a ARCH_ARRAY <<< "${IMAGE_ARCH}"
+for ARCH in "${ARCH_ARRAY[@]}"; do
+  ARCH_FLAGS+=(--arch="${ARCH}")
+done
+
 # 执行同步
 echo "Starting image sync with concurrent=${INPUT_CONCURRENT} and retries=${INPUT_RETRIES}..."
-image-syncer --proc=${INPUT_CONCURRENT} --auth=auth.yaml --images=${INPUT_IMAGE_LIST_FILE} --retries=${INPUT_RETRIES} --os=linux --arch=${IMAGE_ARCH}
-
+set -x
+image-syncer --proc="${INPUT_CONCURRENT}" --auth=auth.yaml --images="${INPUT_IMAGE_LIST_FILE}" --retries="${INPUT_RETRIES}" --os=linux "${ARCH_FLAGS[@]}"
+set +x
 echo "Image sync completed successfully!"
 
